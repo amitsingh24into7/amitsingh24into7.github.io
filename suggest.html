@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Suggest a Feature - Nyayastra</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body { font-family: 'Inter', sans-serif; background: #f8fafc; }
+  </style>
+</head>
+<body class="p-6">
+
+  <!-- Header -->
+  <div class="flex items-center mb-6">
+    <a href="home.html" class="mr-3 text-blue-600">
+      <span class="material-symbols-outlined">arrow_back</span>
+    </a>
+    <h1 class="text-2xl font-bold text-gray-900">Suggest a Feature</h1>
+  </div>
+
+  <div class="bg-white p-6 rounded-xl shadow-sm border">
+    <p class="text-gray-600 mb-6">Have an idea to make Nyayastra better? Share it with us!</p>
+
+    <form class="space-y-4">
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-1">Your Name (Optional)</label>
+        <input type="text" class="w-full p-3 rounded-lg" placeholder="Optional" />
+      </div>
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-1">Email (Optional)</label>
+        <input type="email" class="w-full p-3 rounded-lg" placeholder="So we can reply" />
+      </div>
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-1">Feature Suggestion</label>
+        <textarea rows="5" class="w-full p-3 rounded-lg" placeholder="Describe your idea..." required></textarea>
+      </div>
+      <button type="submit" class="w-full bg-green-600 text-white py-3 rounded-lg font-semibold">Submit Suggestion</button>
+    </form>
+  </div>
+
+</body>
+</html>
