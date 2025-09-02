@@ -21,10 +21,13 @@
       margin: 0;
       padding: 0;
       min-height: 100dvh;
+      background: var(--background-color);
     }
     .page {
       display: none;
       padding: 1rem;
+      height: calc(100dvh - 70px);
+      overflow-y: auto;
     }
     .page.active {
       display: block;
@@ -60,27 +63,16 @@
     .nav-item .material-symbols-outlined {
       font-size: 24px;
     }
-    .others-menu {
-      background: white;
-      border: 1px solid #E2E8F0;
-      border-radius: 12px;
-      padding: 0.75rem 0;
-      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-      margin-top: -10rem;
-      margin-left: auto;
-      margin-right: 1rem;
-      width: 200px;
-      display: none;
+    /* Two-column layout */
+    .content-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1rem;
     }
-    .others-menu a {
-      display: block;
-      padding: 0.5rem 1rem;
-      color: var(--text-primary);
-      text-decoration: none;
-      font-size: 0.875rem;
-    }
-    .others-menu a:hover {
-      background: #F1F5F9;
+    @media (min-width: 768px) {
+      .content-grid {
+        grid-template-columns: 1fr 1fr;
+      }
     }
   </style>
 </head>
@@ -91,7 +83,7 @@
     <div class="p-4">
       <h1 class="text-2xl font-bold text-[var(--primary-color)] mb-6 text-center">Welcome to Nyayastra</h1>
       
-      <div class="grid grid-cols-1 gap-4">
+      <div class="content-grid">
         <!-- Nyayastra Pulse -->
         <a href="https://nyastra-pulse.streamlit.app" class="block">
           <div class="flex flex-col items-center justify-between rounded-2xl bg-[var(--card-background)] p-4 shadow-sm">
@@ -149,19 +141,43 @@
 
   <!-- Chat Page -->
   <div id="chat-page" class="page">
-    <div class="p-4 text-center">
-      <h1 class="text-2xl font-bold text-[var(--primary-color)]">Chat with AI Assistant</h1>
-      <p class="mt-4 text-gray-600">Ask any legal question — get instant help powered by AI.</p>
-      <div class="mt-6 bg-white p-4 rounded-lg shadow">
-        <p>💬 AI Assistant is ready to help you!</p>
+    <div class="p-4">
+      <h1 class="text-2xl font-bold text-[var(--primary-color)] mb-6">Chat with AI Assistant</h1>
+      <div class="bg-white p-4 rounded-lg shadow mb-4">
+        <p>💬 Hi! I'm your AI legal assistant. How can I help you today?</p>
+      </div>
+      <div class="space-y-3">
+        <div class="bg-white p-3 rounded-lg shadow">
+          <strong>You:</strong> Can I file a case for cheque bounce?
+        </div>
+        <div class="bg-blue-100 p-3 rounded-lg shadow">
+          <strong>AI:</strong> Yes, under Section 138 of the Negotiable Instruments Act. You can use Nyayastra Pulse to generate the notice and file the complaint.
+        </div>
+        <div class="bg-white p-3 rounded-lg shadow">
+          <strong>You:</strong> How long does it take?
+        </div>
+        <div class="bg-blue-100 p-3 rounded-lg shadow">
+          <strong>AI:</strong> Typically 6–18 months, depending on the court. We can help you track your case status in real time.
+        </div>
+      </div>
+      <div class="fixed bottom-16 left-4 right-4 bg-white p-2 rounded-full shadow flex">
+        <input type="text" placeholder="Type a message..." class="flex-1 border-none outline-none p-2 rounded-full" />
+        <button class="bg-[var(--secondary-color)] text-white p-2 rounded-full px-4">Send</button>
       </div>
     </div>
   </div>
 
-  <!-- Others Page (Static Pages) -->
+  <!-- Others Page -->
   <div id="others-page" class="page">
     <div class="p-4">
-      <h1 class="text-2xl font-bold text-[var(--primary-color)] mb-6">More</h1>
+      <!-- Header with Back Button -->
+      <div class="flex items-center mb-6">
+        <button onclick="showPage('home')" class="mr-3 text-[var(--primary-color)]">
+          <span class="material-symbols-outlined">arrow_back</span>
+        </button>
+        <h1 class="text-2xl font-bold text-[var(--primary-color)]">More</h1>
+      </div>
+
       <div class="space-y-3">
         <a href="#about" class="block p-4 bg-white rounded-xl shadow-sm border">About Us</a>
         <a href="#contact" class="block p-4 bg-white rounded-xl shadow-sm border">Contact Us</a>
@@ -169,6 +185,8 @@
         <a href="#privacy" class="block p-4 bg-white rounded-xl shadow-sm border">Privacy Policy</a>
         <a href="#terms" class="block p-4 bg-white rounded-xl shadow-sm border">Terms of Service</a>
         <a href="#suggest" class="block p-4 bg-white rounded-xl shadow-sm border">Suggest a Feature</a>
+        <a href="#faq" class="block p-4 bg-white rounded-xl shadow-sm border">FAQ</a>
+        <a href="#support" class="block p-4 bg-white rounded-xl shadow-sm border">Support</a>
       </div>
     </div>
   </div>
@@ -184,20 +202,10 @@
         <span class="material-symbols-outlined">chat_bubble</span>
         <p>Chat</p>
       </a>
-      <a href="#" class="nav-item" onclick="toggleOthersMenu(); return false;">
+      <a href="#" class="nav-item" onclick="showPage('others'); return false;">
         <span class="material-symbols-outlined">menu</span>
         <p>Others</p>
       </a>
-    </div>
-
-    <!-- Dropdown for Others -->
-    <div id="others-menu" class="others-menu">
-      <a href="#about">About Us</a>
-      <a href="#contact">Contact Us</a>
-      <a href="#who-we-are">Who We Are</a>
-      <a href="#privacy">Privacy Policy</a>
-      <a href="#terms">Terms of Service</a>
-      <a href="#suggest">Suggest a Feature</a>
     </div>
   </footer>
 
@@ -211,26 +219,10 @@
         item.classList.remove('active');
       });
       document.querySelector(`.nav-item[onclick*="${page}"]`).classList.add('active');
-      hideOthersMenu();
     }
 
-    function toggleOthersMenu() {
-      const menu = document.getElementById('others-menu');
-      menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
-    }
-
-    function hideOthersMenu() {
-      document.getElementById('others-menu').style.display = 'none';
-    }
-
-    // Close menu when clicking outside
-    document.addEventListener('click', function(e) {
-      const menu = document.getElementById('others-menu');
-      const othersIcon = document.querySelector('[onclick="toggleOthersMenu()"]');
-      if (menu.style.display === 'block' && !menu.contains(e.target) && !othersIcon.contains(e.target)) {
-        hideOthersMenu();
-      }
-    });
+    // Initialize: Show home on load
+    window.onload = () => showPage('home');
   </script>
 
 </body>
